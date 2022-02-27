@@ -1,0 +1,18 @@
+$ const { id, type, pageNode, ...rest } = input;
+
+<global-content-media-gallery-layout
+  id=id
+  type=type
+  page-node=pageNode
+  ...rest
+>
+  <@section>
+     <theme-top-stories-block query-params={ optionName: "Pinned" } />
+  </@section>
+  <@section>
+    <site-promo-card-rotation-block />
+  </@section>
+  <@section>
+    <theme-client-side-most-popular-block />
+  </@section>
+</global-content-media-gallery-layout>

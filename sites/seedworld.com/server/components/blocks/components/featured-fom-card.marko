@@ -1,0 +1,65 @@
+import { buildImgixUrl } from "@parameter1/base-cms-image";
+import { getAsArray } from "@parameter1/base-cms-object-path";
+import query from "../../../project-gallery/queries/featured-fom-block";
+
+$ const { client } = input;
+$ const blockName = "featured-fom-card";
+
+$ const variables = {
+  input: {
+    types: ["ARCHITECTURAL_SHOWCASE"],
+    winner: true,
+    sort: { field: "PUBLISHED_AT", order: "DESC" },
+    pagination: { limit: 3 },
+    hasImages: true
+  },
+};
+
+$ const imageOptions = {
+  w: 143,
+  h: 143,
+  fit: "crop",
+  auto: "format,compress",
+  q: 70,
+};
+
+<marko-web-resolve|{ resolved }| promise=client.query({ query, variables })>
+  $ const { data } = resolved;
+  $ const nodes = getAsArray(data, "entries.edges").map(edge => edge.node);
+  <marko-web-block name=blockName>
+    <marko-web-element block-name=blockName name="body">
+      <if(nodes.length)>
+        <marko-web-link href="/project-galleries/facilities-of-merit" class=[`${blockName}__image-container`]>
+          <for|node| of=nodes>
+            $ const { primaryImageEdge } = node;
+            $ const src = buildImgixUrl(primaryImageEdge.node.src, imageOptions);
+            $ const srcset = [`${buildImgixUrl(src, { dpr: 2 })} 2x`];
+            <marko-web-element block-name=blockName name="image-wrapper">
+              <marko-web-img
+                src=src
+                srcset=srcset
+                alt=primaryImageEdge.node.alt
+                class=[`${blockName}__image`]
+              />
+            </marko-web-element>
+          </for>
+        </marko-web-link>
+      </if>
+      <marko-web-element block-name=blockName name="header">
+        Facilities of Merit
+      </marko-web-element>
+      <marko-web-element block-name=blockName name="description">
+        Each year, a panel of judges selects the 10 Architectural Showcase projects they feel represent the best in architectural design and innovation.
+      </marko-web-element>
+      <marko-web-link href="/project-galleries/facilities-of-merit" class=[`${blockName}__view-all-link`]>
+        Check out this year’s Facilities of Merit »
+      </marko-web-link>
+    </marko-web-element>
+
+    <marko-web-element block-name=blockName name="btn-wrapper">
+      <marko-web-link href="/project-galleries/architectural-showcase" class="btn btn-secondary">
+        View all Showcase Projects
+      </marko-web-link>
+    </marko-web-element>
+  </marko-web-block>
+</marko-web-resolve>

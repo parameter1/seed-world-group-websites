@@ -1,0 +1,16 @@
+$theme-site-header-breakpoints: (
+  hide-primary: 1100px,
+  hide-secondary: 700px,
+  small-logo: 775px,
+  small-text-primary: 0,
+  small-text-secondary: 830px
+);
+
+$navbarStyle: "navbar2";
+$theme-site-navbar-primary-type: light;
+$theme-site-navbar-logo-height: 45px;
+
+// Colors
+$primary: #103a57;
+
+@import "../../node_modules/@seed-world-group/package-global/scss/core";

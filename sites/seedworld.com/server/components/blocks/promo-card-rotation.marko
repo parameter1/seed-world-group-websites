@@ -1,0 +1,18 @@
+import { getAsArray } from "@parameter1/base-cms-object-path";
+import shuffle from "@seed-world-group/package-global/utils/shuffle-array";
+import BuyersGuide from "./promos/buyers-guide";
+import ABShow from "./promos/ab-show";
+
+$ const Promos = shuffle([BuyersGuide, ABShow]);
+$ const blockName = "callout-cards";
+
+<marko-web-block name=blockName>
+  <marko-web-element block-name=blockName name="row">
+    <marko-web-element block-name=blockName name="col">
+      <${Promos[0]} />
+    </marko-web-element>
+    <marko-web-element block-name=blockName name="col" modifiers=["last"]>
+      <${Promos[1]} />
+    </marko-web-element>
+  </marko-web-element>
+</marko-web-block>

@@ -1,0 +1,51 @@
+import { get } from "@parameter1/base-cms-object-path";
+
+$ const { id, alias, name, pageNode } = input;
+
+$ const { site } = out.global;
+
+<global-website-section-home-layout
+  id=id
+  alias=alias
+  name=name
+  page-node=pageNode
+>
+  <!-- <@head>
+    <meta name="google-site-verification" content="NOT_SET" />
+  </@head> -->
+
+  <!-- <@section|{ aliases }| modifiers=["break-container"]>
+    <theme-opinion-block alias="industry-press-room" />
+  </@section> -->
+
+  <@section>
+    <theme-section-list-deck-block aliases=["technology", "business", "leadership"] />
+  </@section>
+
+  <!-- <@section|{ aliases }|>
+    $ const publicationIds = site.get("publicationIds");
+    <if(publicationIds.length)>
+      <global-magazine-issues-block publication-id=publicationIds[0] />
+    </if>
+    <else>
+      <theme-gam-define-display-ad
+        name="rotation"
+        position="home_page"
+        aliases=aliases
+        modifiers=["inter-block"]
+      />
+    </else>
+  </@section> -->
+
+  <!-- <@section>
+    <site-architectural-showcase-block />
+  </@section>
+
+  <@section>
+    <site-promo-card-rotation-block />
+  </@section>
+
+  <@section>
+    <theme-client-side-most-popular-block />
+  </@section> -->
+</global-website-section-home-layout>
