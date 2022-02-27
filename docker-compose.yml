@@ -76,10 +76,10 @@ services:
     environment:
       <<: *env
       <<: *env-leonis
-      HOST: www-seedworldgroup-ab.dev.parameter1.com
+      HOST: www-seedworldgroup-sw.dev.parameter1.com
       PORT: 80
-      EXPOSED_PORT: 9801
-      LIVERELOAD_PORT: 19801
+      EXPOSED_PORT: 9860
+      LIVERELOAD_PORT: 19860
       TENANT_KEY: seedworldgroup_all
       SITE_ID: 621ab54a95531131008b4567
     hostname: www-seedworldgroup-sw.dev.parameter1.com
