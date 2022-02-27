@@ -4,7 +4,9 @@ $skin-font-family-primary: solitaire-mvb-pro, sans-serif;
 $skin-font-family-secondary: informapro, sans-serif;
 
 // Navbar
-$theme-site-navbar-logo-height: 45px !default;
+$navbarStyle: "navbar2" !default;
+$theme-site-navbar-logo-height: 60px !default;
+$theme-site-navbar-secondary-font-size: 16px !default;
 
 // Ads
 $leaderboard-min-height-mobile: 100px !default;
