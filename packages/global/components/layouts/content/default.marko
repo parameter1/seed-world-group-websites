@@ -24,10 +24,6 @@ $ const shouldInjectAds = ["article", "video", "news", "podcast"].includes(type)
   page-node=pageNode
   ...rest
 >
-  <@section|{ aliases }| modifiers=["premium-partners"]>
-    <global-premium-partners-block />
-  </@section>
-
   <@section|{ aliases }| modifiers=["break-container", "first-sm"]>
     <global-leaderboard-ad-block
       position="content_page"
