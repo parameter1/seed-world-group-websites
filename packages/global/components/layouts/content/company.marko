@@ -1,0 +1,201 @@
+import { getAsArray } from "@parameter1/base-cms-object-path";
+import { buildImgixUrl } from "@parameter1/base-cms-image";
+import imageHeight from "@parameter1/base-cms-marko-web/components/node/utils/image-height";
+import queryFragment from "@seed-world-group/package-theme-monorail/graphql/fragments/section-feed-block";
+
+$ const { id, type, pageNode, ...rest } = input;
+$ const sections = getAsArray(input, "sections");
+
+$ const { $projectsGraphQL } = out.global;
+
+<global-content-wrapper-layout
+  id=id
+  type=type
+  page-node=pageNode
+  ...rest
+>
+  <@section|{ aliases }| modifiers=["first-sm"]>
+    <theme-gam-define-display-ad
+      name="leaderboard"
+      position="content_page"
+      aliases=aliases
+      modifiers=["inter-block"]
+    />
+  </@section>
+
+  <@section|{ aliases, blockName, content }| modifiers=["content-header"]>
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="content-page-header">
+          <marko-web-content-name tag="h1" block-name=blockName obj=content />
+          $ const { primaryImage } = content;
+          $ const detailsBlock = "details";
+          <marko-web-block name=detailsBlock>
+            <if(primaryImage && primaryImage.src)>
+              $ const imgWidth = 200;
+              $ const imgHeight = imageHeight(imgWidth, "16:9");
+              $ const src = buildImgixUrl(primaryImage.src, {
+                w: imgWidth,
+                h: imgHeight,
+                fit: "fill"
+              });
+              $ const srcset = [`${buildImgixUrl(src, { dpr: 2 })} 2x`];
+              <marko-web-img
+                src=src
+                srcset=srcset
+                alt=primaryImage.alt
+                class=`${detailsBlock}__image`
+              />
+            </if>
+            <global-content-company-details obj=content />
+          </marko-web-block>
+        </div>
+
+        <div class="content-page-body">
+          <default-theme-page-contents|{ blockName }| attrs={ "data-gallery-id": id }>
+            $ const bodyId = `content-body-${content.id}`;
+            <marko-web-content-body block-name=blockName obj=content attrs={ id: bodyId } />
+          </default-theme-page-contents>
+        </div>
+
+        <global-directory-featured-projects-block
+          graphql-client=$projectsGraphQL
+          short-ids=content.projectShortIds
+        />
+
+        <marko-web-query|{ nodes }|
+          name="all-company-content"
+          params={
+            companyId: content.id,
+            includeContentTypes: ["MediaGallery"],
+            includeLabels: "Buyers Guide Project Gallery",
+            limit: 10,
+            queryFragment,
+          }
+        >
+          <theme-content-directory-section-flow nodes=nodes>
+            <@header>Project Galleries</@header>
+            <@node with-dates=false />
+          </theme-content-directory-section-flow>
+        </marko-web-query>
+
+        <marko-web-query|{ nodes }|
+          name="all-company-content"
+          params={
+            companyId: content.id,
+            includeContentTypes: ["Product", "PressRelease"],
+            limit: 10,
+            queryFragment,
+          }
+        >
+          <theme-content-directory-section-flow nodes=nodes>
+            <@header>Products & Press Releases</@header>
+          </theme-content-directory-section-flow>
+        </marko-web-query>
+
+        <marko-web-query|{ nodes }|
+          name="all-company-content"
+          params={
+            companyId: content.id,
+            includeContentTypes: ["Video"],
+            limit: 10,
+            queryFragment,
+          }
+        >
+          <theme-content-directory-section-flow nodes=nodes>
+            <@header>Videos</@header>
+          </theme-content-directory-section-flow>
+        </marko-web-query>
+
+        <marko-web-query|{ nodes }|
+          name="all-company-content"
+          params={
+            companyId: content.id,
+            excludeContentTypes: ["Product", "PressRelease", "Video", "Document", "Promotion", "MediaGallery"],
+            limit: 10,
+            queryFragment,
+          }
+        >
+          <theme-content-directory-section-flow nodes=nodes>
+            <@header>More from ${content.name}</@header>
+          </theme-content-directory-section-flow>
+        </marko-web-query>
+
+        <global-directory-sections-block schedules=content.websiteSchedules />
+
+        <${input.afterBody}
+          aliases=aliases
+          block-name=blockName
+          content=content
+        />
+      </div>
+
+      <div class="col-lg-4 pt-block">
+        $ const { site } = out.global;
+        $ const inquiry = site.getAsObject('inquiry');
+        <if(inquiry.enabled && content.enableRmi)>
+          <marko-web-node-list collapsible=false>
+            <@header>Request More Information</@header>
+            <@body>
+              <marko-web-inquiry-form content=content with-header=false modifiers=["node-list"] />
+            </@body>
+          </marko-web-node-list>
+        </if>
+
+        <marko-web-query|{ nodes }|
+          name="all-company-content"
+          params={
+            companyId: content.id,
+            includeContentTypes: ["Document", "Promotion"],
+            limit: 10,
+            includeLabels: "Buyers Guide Catalog",
+            queryFragment,
+          }
+        >
+          <theme-content-directory-section-flow nodes=nodes>
+            <@header>Catalogs</@header>
+            <@node with-dates=false>
+              <@image width=100 ar="3:4" />
+            </@node>
+          </theme-content-directory-section-flow>
+        </marko-web-query>
+
+        <if(input.rightRail)>
+          <${input.rightRail}
+            aliases=aliases
+            block-name=blockName
+            content=content
+          />
+        </if>
+        <else>
+          <!-- <theme-gam-define-display-ad
+            name="rotation-1"
+            position="content_page"
+            aliases=aliases
+            modifiers=["max-width-300", "center", "margin-auto-x", "rail"]
+            class="mb-block"
+          /> -->
+        </else>
+      </div>
+    </div>
+  </@section>
+
+  <@section|{ aliases }|>
+    <theme-gam-define-display-ad
+      name="rotation"
+      position="content_page"
+      aliases=aliases
+      modifiers=["inter-block"]
+    />
+  </@section>
+
+  <for|s| of=sections>
+    <@section|{ blockName, content, aliases }| modifiers=s.modifiers>
+      <${s.renderBody}
+        block-name=blockName
+        content=content
+        aliases=aliases
+      />
+    </@section>
+  </for>
+</global-content-wrapper-layout>

@@ -1,0 +1,5 @@
+{
+  "<global-standard-promo-block>": {
+    "template": "./standard.marko"
+  }
+}

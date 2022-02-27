@@ -1,0 +1,32 @@
+{
+  "taglib-imports": [
+    "./promos/marko.json"
+  ],
+  "<global-leaderboard-ad-block>": {
+    "template": "./leaderboard-ad.marko"
+  },
+  "<global-directory-featured-projects-block>": {
+    "template": "./directory-featured-projects.marko",
+    "@graphql-client": "object",
+    "@short-ids": "string"
+  },
+  "<global-directory-sections-block>": {
+    "template": "./directory-sections.marko",
+    "@schedules": "array"
+  },
+  "<global-newsletter-signup-banner-static-block>": {
+    "template": "./newsletter-signup-banner-static.marko"
+  },
+  "<global-premium-partners-block>": {
+    "template": "./premium-partners.marko"
+  },
+  "<global-reader-rigs-submit-block>": {
+    "template": "./reader-rigs-submit.marko"
+  },
+  "<global-company-search-block>": {
+    "template": "./company-search.marko"
+  },
+  "<global-section-search-block>": {
+    "template": "./section-search.marko"
+  }
+}

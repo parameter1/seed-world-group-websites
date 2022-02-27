@@ -1,0 +1,146 @@
+import { getAsArray } from "@parameter1/base-cms-object-path";
+
+import queryFragment from "../../graphql/fragments/directory-section-micro-feed-block";
+
+$ const { id, alias, name, pageNode } = input;
+$ const { $markoWebSearch: search } = out.global;
+$ const sortField = (search.input.searchQuery) ? undefined : "NAME";
+$ const sortOrder = (search.input.searchQuery) ? undefined : "ASC";
+$ const currentPage = search.getCurrentPage();
+$ const rootAliases = ["directory"];
+
+<global-website-section-default-layout
+  id=id
+  alias=alias
+  name=name
+  page-node=pageNode
+>
+  <@section|{ aliases }| modifiers=["first"]>
+    <global-leaderboard-ad-block
+      position="section_page"
+      aliases=aliases
+      modifiers=["inter-block"]
+    />
+  </@section>
+  <@section|{ blockName, section }| modifiers=["website-section-description"]>
+    <marko-web-website-section-name tag="h1" block-name=blockName obj=section />
+    <marko-web-website-section-description block-name=blockName obj=section />
+  </@section>
+
+  <@section|{ blockName, section }|>
+    <div class="row">
+      <div class="col-lg-3">
+        <marko-web-search-filter-container title="Category Fileters">
+          <@title value="Browse Categories" />
+          $ const facetAlias = section.children.edges.length ? alias : section.parent.alias;
+          <global-directory-facet-block primary-alias=facetAlias search-query=search.input.searchQuery active-id=id />
+        </marko-web-search-filter-container>
+      </div>
+
+      <div class="col-lg-9">
+        <div class="row">
+          <div class="col-md-6 mb-block">
+            <div class="company-search__title"> Search Companies:</div>
+            <global-company-search-block />
+          </div>
+          <div class="col-md-6 mb-block">
+            <div class="section-search__title">Search Categories:</div>
+            <global-section-search-block section-ids=[id] include-self=false/>
+          </div>
+        </div>
+        <marko-web-page-wrapper modifiers=["no-padding-x"]>
+          <@section  modifiers=["featured-listings"]>
+            $ const featuredParams = {
+              limit: 250,
+              sectionAlias: alias,
+              optionName: ["Pinned", "Standard"],
+              sort: { field: 'name', order: 'asc'},
+              includeLabels: ["Buyers Guide Microsite", "Buyers Guide Advertiser"],
+              queryFragment,
+            };
+            <div class="directory-featured-listing__item--wrapper directory-featured-listing__item--open">
+              <marko-web-query|{ nodes }| name="website-scheduled-content" params=featuredParams>
+                <!-- split/filter by type ["Buyers Guide Microsite", "Buyers Guide Advertiser"] -->
+                $ const bgmNodes = nodes.reduce((arr, node) => {
+                  if (node.labels.includes("Buyers Guide Microsite")) arr.push(node);
+                  return arr;
+                }, []);
+                $ const bgaNodes = nodes.reduce((arr, node) => {
+                  if (!node.labels.includes("Buyers Guide Microsite")) arr.push(node);
+                  return arr;
+                }, []);
+                <marko-web-node-list
+                  inner-justified=true
+                  flush-x=false
+                  flush-y=false
+                  modifiers=["directory-section-feed", "featured-listings"]
+                >
+                  <@header>
+                    Featured
+                    <theme-menu-toggle-button
+                      class='directory-featured-listing__toggle'
+                      targets=['.directory-featured-listing__item--wrapper']
+                      toggle-class='directory-featured-listing__item--open'
+                      initially-expanded=true
+                      icon-modifiers=["sm"]
+                      icon-name="chevron-up"
+                      expanded-icon-name="chevron-down"
+                    />
+                  </@header>
+                  <@nodes nodes=bgmNodes>
+                    <@slot|{ node }|>
+                      <theme-directory-section-feed-content-node
+                        node=node
+                        with-dates=false
+                        is-featured=true
+                      />
+                    </@slot>
+                  </@nodes>
+                </marko-web-node-list>
+                <marko-web-node-list
+                  inner-justified=true
+                  flush-x=false
+                  flush-y=false
+                  modifiers=["directory-section-feed", "featured-listings"]
+                >
+                  <if(bgmNodes.length === 0)>
+                    <@header>
+                      Featured
+                      <theme-menu-toggle-button
+                        class='directory-featured-listing__toggle'
+                        targets=['.directory-featured-listing__item--wrapper']
+                        toggle-class='directory-featured-listing__item--open'
+                        initially-expanded=true
+                        icon-modifiers=["sm"]
+                        icon-name="chevron-up"
+                        expanded-icon-name="chevron-down"
+                      />
+                    </@header>
+                  </if>
+                  <@nodes nodes=bgaNodes>
+                    <@slot|{ node }|>
+                      <theme-directory-section-feed-content-node
+                        node=node
+                        with-dates=false
+                        is-featured=true
+                        display-featured-teaser=false
+                        display-image=false
+                      />
+                    </@slot>
+                  </@nodes>
+                </marko-web-node-list>
+              </marko-web-query>
+            </div>
+          </@section>
+        </marko-web-page-wrapper>
+      </div>
+    </div>
+  </@section>
+  <@section>
+    <theme-gam-define-display-ad
+      name="rotation"
+      position="static_page"
+      modifiers=["inter-block"]
+    />
+  </@section>
+</global-website-section-default-layout>

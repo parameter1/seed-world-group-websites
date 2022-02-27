@@ -1,0 +1,101 @@
+.partners {
+  width: 100%;
+  // height: 56px;
+  padding-bottom: 18px;
+  .card-deck-flow {
+    flex-wrap: nowrap;
+    max-width: 100%;
+    &__node {
+      max-width: 100%;
+      margin-bottom: 0;
+      .premium-partners {
+        &__logo {
+          max-width: 100px;
+        }
+      }
+    }
+  }
+  @include media-breakpoint-up(md) {
+    background-color: $gray-100;
+  }
+  .slick-list {
+    max-width: 100%;
+    overflow: hidden;
+  }
+  .slick-track {
+    display: flex;
+    width: 100%;
+    [aria-hidden="true"] {
+      display: none;
+    }
+  }
+  .slick-slide {
+    padding-right: 8px;
+    padding-left: 8px;
+    text-align: center;
+    .premium-partners {
+      &__logo {
+        max-width: 100px;
+      }
+    }
+  }
+}
+
+.page-wrapper {
+  &__section {
+    &--premium-partners {
+      margin-bottom: 0;
+      .ad-container {
+        &--with-label-partners {
+          // height: 73px;
+          padding-bottom: 0;
+          > *:first-child {
+            padding-top: 4px;
+            padding-bottom: 4px;
+            &::before {
+              display: none;
+            }
+          }
+          .partners {
+            flex-direction: row;
+            background-color: #fff;
+            @media (max-width: $marko-web-document-container-max-width) {
+              padding-right: 16px;
+              padding-left: 16px;
+            }
+          }
+          .partners-label {
+            display: block;
+            margin-left: -8px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #3f4043;
+            text-transform: uppercase;
+          }
+        }
+      }
+      .card-deck-flow {
+        &::before {
+          display: none;
+          height: 40px;
+          padding-top: .5rem;
+          font-size: 13px;
+          font-weight: $font-weight-bold;
+          color: $gray-800;
+          text-transform: none;
+          content: "Premium Partners:";
+        }
+        &__node {
+          width: auto;
+          // height: 40px;
+          padding-right: 8px;
+          padding-left: 8px;
+          text-align: center;
+        }
+      }
+      @include media-breakpoint-down(md) {
+        display: none;
+      }
+    }
+  }
+}

@@ -1,0 +1,44 @@
+import { get, getAsArray } from "@parameter1/base-cms-object-path";
+
+$ const { id, alias, name, pageNode } = input;
+$ const { site } = out.global;
+$ const sections = getAsArray(input, "sections");
+
+<global-website-section-default-layout
+  id=id
+  alias=alias
+  name=name
+  page-node=pageNode
+  head=input.head
+>
+  <@section|{ aliases }| modifiers=["break-container", "first"]>
+    <global-leaderboard-ad-block
+      position="home_page"
+      aliases=aliases
+      modifiers=["inter-block", "combined-leaderboard"]
+    />
+  </@section>
+
+  <@section|{ aliases }|>
+    <theme-top-stories-block query-params={ optionName: "Pinned" } with-header=false lazyload=false />
+  </@section>
+
+  <for|s| of=sections>
+    <@section|{ blockName, section, aliases }| modifiers=s.modifiers>
+      <${s.renderBody}
+        block-name=blockName
+        section=section
+        aliases=aliases
+      />
+    </@section>
+  </for>
+
+  <@section|{ aliases }|>
+    <theme-gam-define-display-ad
+      name="rotation"
+      position="home_page"
+      aliases=aliases
+      modifiers=["inter-block"]
+    />
+  </@section>
+</global-website-section-default-layout>

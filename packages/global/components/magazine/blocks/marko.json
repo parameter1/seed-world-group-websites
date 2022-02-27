@@ -1,0 +1,14 @@
+{
+  "<global-magazine-current-issue-block>": {
+    "template": "./magazine-current-issue.marko"
+  },
+  "<global-magazine-publications-block>": {
+    "template": "./magazine-publications.marko"
+  },
+  "<global-magazine-issues-block>": {
+    "template": "./magazine-issues.marko"
+  },
+  "<global-magazine-issue-cards-block>": {
+    "template": "./magazine-issue-cards.marko"
+  }
+}

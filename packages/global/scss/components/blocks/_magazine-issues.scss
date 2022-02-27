@@ -1,0 +1,63 @@
+.magazine-issues {
+  $self: &;
+  margin-right: $marko-web-page-wrapper-padding * -1;
+  margin-left: $marko-web-page-wrapper-padding * -1;
+  @include media-breakpoint-down(md) {
+    margin-right: -16px;
+    margin-left: -16px;
+  }
+  &__wrapper {
+    padding-right: 15px;
+    padding-left: 15px;
+    background-color: $gray-100;
+
+    @media (min-width: $marko-web-document-container-max-width) {
+      $margin: calc((((100vw - #{$marko-web-document-container-max-width}) / 2) + #{$marko-web-page-wrapper-padding}) * -1);
+      margin-right: $margin;
+      margin-left: $margin;
+
+      #{ $self }__contents {
+        max-width: $marko-web-document-container-max-width;
+        margin-right: auto;
+        margin-left: auto;
+      }
+    }
+    + #{ $self }__wrapper {
+      background-color: $gray-200;
+    }
+  }
+
+  &__header {
+    padding-top: 30px;
+    padding-bottom: 15px;
+    @include skin-typography($style: "section-header-small");
+  }
+
+  &__contents {
+    &--buttons {
+      display: flex;
+      justify-content: center;
+      padding-top: 15px;
+      padding-bottom: 15px;
+      .btn + .btn {
+        margin-left: 15px;
+      }
+    }
+  }
+
+  .card-deck-flow--4-cols {
+    .card-deck-flow {
+      &__node {
+        @include make-col(3);
+        @include media-breakpoint-down(sm) {
+          @include make-col(6);
+        }
+        .node {
+          &__title {
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+}

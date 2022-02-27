@@ -1,0 +1,67 @@
+$ const { config, site } = out.global;
+
+$ const { id } = data;
+
+$ const type = "digital-edition";
+$ const title = "Digital Edition";
+$ const description = "Digital Edition";
+
+<theme-default-page type=type title=title description=description>
+  <@head>
+    <marko-web-gtm-default-context|{ context }| type=type>
+      <marko-web-gtm-push data=context />
+    </marko-web-gtm-default-context>
+  </@head>
+  <@page>
+    <marko-web-page-wrapper>
+      <@section|{ aliases }| modifiers=["premium-partners"]>
+        <global-premium-partners-block />
+      </@section>
+      <@section>
+        <div class="zmags">
+          <div id="zmags-content" class="zmags__viewer"></div>
+        </div>
+        <script>
+          (function(d) {
+            function loadScript(src, cb) {
+              var ele = d.body || d.documentElement;
+              var s = d.createElement('script');
+              s.async = 1;
+              s.src = src; ele.appendChild(s);
+              s.onload = cb;
+              s.onerror = cb;
+              return s;
+            }
+            loadScript('https://secure.api.viewer.zmags.com/viewer/viewer.js', function() {
+
+              // Initialize the viewer and display the current publication
+              var viewer = new com.zmags.api.Viewer();
+              viewer.setPublicationID('${id}');
+              viewer.setParentElementID('zmags-content');
+              viewer.show();
+
+              // Display the page specified in the URL
+              var pageturn = false; // Do not alter the hash while pages are still turning.
+              if (window.location.hash != "") {
+                viewer.gotoPage(window.location.hash.replace("#", ""));
+              }
+              window.onhashchange = function(event) {
+                if (pageturn == false) {
+                  viewer.gotoPage(window.location.hash.replace("#", ""));
+                }
+              }
+              // Update the URL when pages are turned.
+              viewer.oncurrentpageschange = function(event) {
+                viewer.getCurrentPages(function(data) {
+                  pageturn = true; // Pages currently turning.
+                  window.setTimeout(function(){ pageturn = false; }, 100);
+                  window.location.hash = data.firstPage;
+                });
+              }
+            });
+          })(document);
+        </script>
+      </@section>
+    </marko-web-page-wrapper>
+  </@page>
+</theme-default-page>

@@ -1,0 +1,63 @@
+import { buildImgixUrl } from "@parameter1/base-cms-image";
+import defaultValue from "@parameter1/base-cms-marko-core/utils/default-value";
+import queryFragment from "../../graphql/fragments/premium-partners";
+import shuffle from "../../utils/shuffle-array";
+
+$ const blockName = 'premium-partners';
+
+$ const { config, site } = out.global;
+
+$ const shufflePartners = site.get('premiumPartners.shuffle');
+
+$ const logoOptions = {
+  h: 30,
+  fit: "fillmax",
+  fill: "solid",
+  bg: "fff",
+  auto: "format,compress&q=70"
+};
+$ const lazyload = defaultValue(input.lazyload, false);
+$ const queryParams = {
+  limit: 50,
+  queryFragment,
+  requiresImage: true,
+  includeContentTypes: ["Promotion"],
+  sectionAlias: 'premium-partners',
+};
+<marko-web-query|{ nodes }| name="website-scheduled-content" params=queryParams>
+  <if(nodes.length > 10)>
+    $ const partners = shuffle(nodes);
+    <marko-web-browser-component
+      name="GlobalPremiumPartners"
+      props={
+        partners,
+      }
+      ssr=true
+    />
+  </if>
+  <else if(nodes.length)>
+    $ const displayLimit = defaultValue(input.displayLimit, 10);
+    $ const shuffledPartners = (shufflePartners) ? shuffle(nodes).slice(0, displayLimit) : nodes.slice(0, displayLimit);
+    <div class=`ad-container--with-label ad-container--with-label-partners`>
+      <div class="partners-label">Premium Partners</div>
+      <marko-web-block name="partners">
+        <div class="card-deck-flow">
+          <for|partner| of=shuffledPartners>
+            <div class="card-deck-flow__node">
+              $ const imageSrc = partner.primaryImage.src ? buildImgixUrl(partner.primaryImage.src, logoOptions) : null;
+              $ const imageSrcset = imageSrc ? `${imageSrc}&dpr=2 2x` : null;
+              <marko-web-img
+                class=`${blockName}__logo`
+                link={ href: partner.linkUrl, target: "_blank" }
+                src=imageSrc
+                srcset=[imageSrcset]
+                alt=partner.shortName
+                lazyload=lazyload
+              />
+            </div>
+          </for>
+        </div>
+      </marko-web-block>
+    </div>
+  </else>
+</marko-web-query>
