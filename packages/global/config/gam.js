@@ -1,7 +1,7 @@
 const GAMConfiguration = require('@parameter1/base-cms-marko-web-gam/config');
 
 module.exports = ({
-  accountId = '22579668215',
+  accountId = 'NOT_SET',
   basePath,
 } = {}) => {
   const config = new GAMConfiguration(accountId, { basePath });
@@ -15,8 +15,8 @@ module.exports = ({
         [265, 149],
       ],
       sizeMapping: [
-        { viewport: [1070, 0], size: [970, 250] },
-        { viewport: [980, 0], size: [970, 250] },
+        { viewport: [1070, 0], size: [970, 90] },
+        { viewport: [980, 0], size: [970, 90] },
         { viewport: [750, 0], size: [300, 100] },
         { viewport: [430, 0], size: [300, 100] },
         { viewport: [300, 0], size: [300, 100] },
