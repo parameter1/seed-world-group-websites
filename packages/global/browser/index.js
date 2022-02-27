@@ -6,7 +6,6 @@ const BillboardCookie = () => import(/* webpackChunkName: "global-billboard-cook
 const CompanySearch = () => import(/* webpackChunkName: "global-company-search" */ './company-search.vue');
 const SectionSearch = () => import(/* webpackChunkName: "global-section-search" */ './section-search.vue');
 const ImageSlider = () => import(/* webpackChunkName: "global-image-slider" */ './image-slider.vue');
-const PremiumPartners = () => import(/* webpackChunkName: "global-premium-partners" */ './premium-partners.vue');
 
 export default (Browser) => {
   const { EventBus } = Browser;
@@ -26,5 +25,4 @@ export default (Browser) => {
   Browser.register('GlobalSectionSearch', SectionSearch, {
     provide: { EventBus },
   });
-  Browser.register('GlobalPremiumPartners', PremiumPartners);
 };
