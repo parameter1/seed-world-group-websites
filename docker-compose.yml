@@ -29,25 +29,29 @@ x-env-defaults: &env
   RECAPTCHA_V3_SITE_KEY: ${RECAPTCHA_V3_SITE_KEY-(unset)}
   RECAPTCHA_V3_SECRET_KEY: ${RECAPTCHA_V3_SECRET_KEY-(unset)}
 
-x-env-virgon-dev: &env-virgon-dev
+x-env-dev: &env-dev
+  <<: *env
   GRAPHQL_URI: ${GRAPHQL_URI-http://host.docker.internal:10103}
   OEMBED_URI: ${OEMBED_URI-https://host.docker.internal:10402}
   RSS_URI: ${RSS_URI-http://host.docker.internal:10203}
   SITEMAPS_URI: ${SITEMAPS_URI-http://host.docker.internal:10303}
 
 x-env-leonis: &env-leonis
+  <<: *env
   GRAPHQL_URI: ${GRAPHQL_URI-https://graphql.leonis.base.parameter1.com}
   OEMBED_URI: ${OEMBED_URI-https://oembed.leonis.base.parameter1.com}
   RSS_URI: ${RSS_URI-https://rss.leonis.base.parameter1.com}
   SITEMAPS_URI: ${SITEMAPS_URI-https://sitemaps.leonis.base.parameter1.com}
 
 x-env-virgon: &env-virgon
+  <<: *env
   GRAPHQL_URI: ${GRAPHQL_URI-https://graphql.virgon.base.parameter1.com}
   OEMBED_URI: ${OEMBED_URI-https://oembed.virgon.base.parameter1.com}
   RSS_URI: ${RSS_URI-https://rss.virgon.base.parameter1.com}
   SITEMAPS_URI: ${SITEMAPS_URI-https://sitemaps.virgon.base.parameter1.com}
 
 x-site-command: &site-cmd
+  <<: *node
   entrypoint: ["node_modules/.bin/basecms-website"]
   command: ["dev", "index.js"]
 
@@ -70,11 +74,9 @@ services:
       <<: *env
 
   sw:
-    <<: *node
     <<: *site-cmd
     working_dir: /root/sites/seedworld.com
     environment:
-      <<: *env
       <<: *env-leonis
       HOST: www-seedworldgroup-sw.dev.parameter1.com
       PORT: 80
