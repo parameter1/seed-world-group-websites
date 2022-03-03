@@ -10,7 +10,7 @@
     "test": "yarn lint"
   },
   "dependencies": {
-    "@seed-world-group/package-theme-monorail": "^1.35.2",
+    "@seed-world-group/package-theme-monorail": "^0.0.0",
     "@parameter1/base-cms-image": "^2.45.0",
     "@parameter1/base-cms-inflector": "^2.0.0",
     "@parameter1/base-cms-marko-core": "^2.75.1",
