@@ -1,9 +1,9 @@
-name: Deploy sites (production)
+name: Deploy sites (onboarding)
 
 on:
   push:
     tags:
-      - 'v[0-9]+.[0-9]+.[0-9]+'
+      - '*'
 
 jobs:
   vars:
@@ -13,7 +13,7 @@ jobs:
       run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
     outputs:
       version: ${{ steps.tag_version.outputs.VERSION }}
-      environment: production
+      environment: staging
 
   pre-deploy:
     needs: [vars]
@@ -34,7 +34,7 @@ jobs:
     strategy:
       matrix:
         namespace:
-          - virgon-websites
+          - leonis-websites
         site:
           - seedworld.com
     steps:
@@ -52,7 +52,7 @@ jobs:
           TRAVIS_TAG: ${{ needs.vars.outputs.version }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           TRAVIS_REPO_SLUG: ${{ github.repository }}
-          FORCE_DEPLOYMENT: 0
+          FORCE_DEPLOYMENT: 1
 
   post-deploy-failure:
     if: failure()
