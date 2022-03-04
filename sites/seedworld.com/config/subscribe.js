@@ -1,5 +1,5 @@
 module.exports = {
-  href: 'https://seedworld.dragonforms.com/loading.do?omedasite=ab_land',
+  href: '/page/subscribe',
   label: 'Subscribe',
   target: '_blank',
 };
