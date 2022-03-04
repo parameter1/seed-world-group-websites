@@ -5,6 +5,9 @@
   "<global-magazine-publications-block>": {
     "template": "./magazine-publications.marko"
   },
+  "<global-magazine-current-issues-block>": {
+    "template": "./magazine-current-issues.marko"
+  },
   "<global-magazine-issues-block>": {
     "template": "./magazine-issues.marko"
   },

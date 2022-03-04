@@ -22,10 +22,10 @@ $ const { site } = out.global;
     <theme-section-list-deck-block aliases=["technology", "business", "leadership"] />
   </@section>
 
-  <!-- <@section|{ aliases }|>
+  <@section|{ aliases }|>
     $ const publicationIds = site.get("publicationIds");
     <if(publicationIds.length)>
-      <global-magazine-issues-block publication-id=publicationIds[0] />
+      <global-magazine-current-issues-block publication-ids=publicationIds />
     </if>
     <else>
       <theme-gam-define-display-ad
@@ -35,17 +35,13 @@ $ const { site } = out.global;
         modifiers=["inter-block"]
       />
     </else>
-  </@section> -->
-
-  <!-- <@section>
-    <site-architectural-showcase-block />
   </@section>
 
   <@section>
     <site-promo-card-rotation-block />
   </@section>
 
-  <@section>
+  <!-- <@section>
     <theme-client-side-most-popular-block />
   </@section> -->
 </global-website-section-home-layout>
