@@ -51,6 +51,7 @@ module.exports = {
       { href: '/business', label: 'Business' },
       { href: '/leadership', label: 'Leadership' },
       { href: '/sustainability', label: 'Sustainability' },
+      { href: '/insiders', label: 'INSIDERS' },
     ],
   },
   secondary: {
