@@ -15,7 +15,10 @@ module.exports = {
   search,
   company: 'Seed World Group',
   publicationIds: [
-    'NOT_SET',
+    '621c1ae376cf334d008b4574',
+    '621c1c1976cf3348008b4575',
+    '621c1c9b9553113d008b4574',
+    '621c1d9d95531142008b456c',
   ],
   subscribe,
   p1events: {
