@@ -1,0 +1,8 @@
+{
+  "taglib-imports": [
+    "./promos/marko.json"
+  ],
+  "<site-promo-card-rotation-block>": {
+    "template": "./promo-card-rotation.marko"
+  }
+}

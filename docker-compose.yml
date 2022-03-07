@@ -88,3 +88,19 @@ services:
     ports:
       - "9860:80"
       - "19860:19860"
+
+  pro:
+    <<: *site-cmd
+    working_dir: /root/sites/pro.seedworld.com
+    environment:
+      <<: *env-leonis
+      HOST: www-seedworldgroup-pro.dev.parameter1.com
+      PORT: 80
+      EXPOSED_PORT: 9861
+      LIVERELOAD_PORT: 19861
+      TENANT_KEY: seedworldgroup_all
+      SITE_ID: 622278e076cf3392018b4567
+    hostname: www-seedworldgroup-pro.dev.parameter1.com
+    ports:
+      - "9861:80"
+      - "19861:19861"
