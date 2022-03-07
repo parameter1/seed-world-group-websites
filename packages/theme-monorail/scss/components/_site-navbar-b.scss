@@ -1,4 +1,4 @@
-@if $navbarStyle == "navbar2" {
+@if $navbarStyle == "navbar-b" {
   .site-navbar {
     $self: &;
     &__container {
@@ -21,7 +21,7 @@
       @media (max-width: map-get($theme-site-header-breakpoints, small-logo)) {
         height: 58px;
       }
-      background-color: $white;
+      background-color: $theme-site-navbar-secondary-bg-color;
       #{ $self } {
         &__container {
           height: $theme-site-navbar-logo-height + 30px;
@@ -95,15 +95,17 @@
       }
     }
     &--primary {
-      background-color: $white;
+      background-color: $theme-site-navbar-primary-bg-color;
       border-top: 1px solid $gray-400;
       #{ $self } {
         &__link {
-          color: $gray-800;
+          color: $theme-site-navbar-primary-link-color;
           text-transform: initial;
           &--active {
+            color: $theme-site-navbar-primary-link-active-color;
             font-weight: 700;
             text-decoration: none;
+            text-shadow: none;
           }
         }
         &__items {
