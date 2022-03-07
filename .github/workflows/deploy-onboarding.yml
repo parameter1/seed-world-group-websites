@@ -37,6 +37,7 @@ jobs:
           - leonis-websites
         site:
           - seedworld.com
+          - pro.seedworld.com
     steps:
       - uses: actions/checkout@v2
       - name: Deploy to Kubernetes

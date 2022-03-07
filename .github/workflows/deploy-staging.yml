@@ -37,6 +37,7 @@ jobs:
           - staging-websites-virgon
         site:
           - seedworld.com
+          - pro.seedworld.com
     steps:
       - uses: actions/checkout@v2
       - name: Deploy to Kubernetes
